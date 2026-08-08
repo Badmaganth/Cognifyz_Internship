@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 5 - RESTful API Interaction</title>
+</head>
+<body>
+    <h2>REST API Client</h2>
+    <input type="text" id="itemName" placeholder="Enter Item Name">
+    <button onclick="addItem()">Add Item</button>
+
+    <h3>Item List</h3>
+    <ul id="itemList"></ul>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api/items';
+
+        async function fetchItems() {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+            const list = document.getElementById('itemList');
+            list.innerHTML = '';
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `${item.name} <button onclick="deleteItem(${item.id})">Delete</button>`;
+                list.appendChild(li);
+            });
+        }
+
+        async function addItem() {
+            const name = document.getElementById('itemName').value;
+            if (!name) return;
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name })
+            });
+            document.getElementById('itemName').value = '';
+            fetchItems();
+        }
+
+        async function deleteItem(id) {
+            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            fetchItems();
+        }
+
+        fetchItems();
+    </script>
+</body>
+</html>

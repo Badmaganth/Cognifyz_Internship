@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 4 - Complex Validation & Dynamic DOM</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        .hidden { display: none; }
+        .strength-indicator { height: 8px; width: 100%; background-color: #ddd; margin-top: 5px; }
+        .strength-bar { height: 100%; width: 0%; transition: width 0.3s; }
+        nav a { margin-right: 15px; cursor: pointer; color: blue; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a onclick="navigate('home')">Home Page</a>
+        <a onclick="navigate('register')">Register Page</a>
+    </nav>
+    <hr>
+
+    <div id="home" class="page">
+        <h1>Welcome to Home View</h1>
+        <p>This is a single-page application demonstrating client-side routing.</p>
+    </div>
+
+    <div id="register" class="page hidden">
+        <h2>Register Form</h2>
+        <form id="regForm">
+            <div>
+                <label>Password:</label><br>
+                <input type="password" id="password" oninput="checkStrength()">
+                <div class="strength-indicator"><div id="bar" class="strength-bar"></div></div>
+                <small id="strengthText"></small>
+            </div>
+            <br>
+            <button type="button" onclick="submitForm()">Submit</button>
+        </form>
+        <div id="userList" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        function navigate(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        function checkStrength() {
+            const pwd = document.getElementById('password').value;
+            const bar = document.getElementById('bar');
+            const text = document.getElementById('strengthText');
+            let score = 0;
+
+            if (pwd.length >= 8) score++;
+            if (/[A-Z]/.test(pwd)) score++;
+            if (/[0-9]/.test(pwd)) score++;
+            if (/[^A-Za-z0-9]/.test(pwd)) score++;
+
+            const colors = ['red', 'orange', 'yellow', 'green'];
+            const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+
+            if (pwd.length === 0) {
+                bar.style.width = '0%';
+                text.textContent = '';
+            } else {
+                bar.style.width = (score * 25) + '%';
+                bar.style.backgroundColor = colors[score - 1] || 'red';
+                text.textContent = labels[score - 1] || 'Weak';
+            }
+        }
+
+        function submitForm() {
+            const pwd = document.getElementById('password').value;
+            if (pwd.length < 8) {
+                alert('Password must be at least 8 characters long!');
+                return;
+            }
+            const container = document.getElementById('userList');
+            const newElem = document.createElement('p');
+            newElem.textContent = `User registered at ${new Date().toLocaleTimeString()} with password strength verified.`;
+            container.appendChild(newElem);
+        }
+    </script>
+</body>
+</html>

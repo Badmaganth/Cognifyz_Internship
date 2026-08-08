@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 3 - Responsive CSS & Animations</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .custom-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .custom-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animated-header {
+            animation: fadeIn 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Cognifyz FullStack</a>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1 class="text-center animated-header mb-4">Responsive Dashboard</h1>
+        
+        <div class="row g-4">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card custom-card p-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Analytics</h5>
+                        <p class="card-text">High-performance tracking and real-time dynamic reporting.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card custom-card p-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Integration</h5>
+                        <p class="card-text">Seamless connectivity with modern external REST APIs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-4">
+                <div class="card custom-card p-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Security</h5>
+                        <p class="card-text">Robust database management and secured endpoint verification.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
