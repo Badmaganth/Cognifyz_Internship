@@ -1,52 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Task 2 - Validation & Inline Styles</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 1 - HTML Form and Express</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 620px; margin: 50px auto; padding: 0 18px; color: #222; }
+    form { display: grid; gap: 12px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+    input, button { font: inherit; padding: 10px; }
+    button { cursor: pointer; background: #1f5eff; color: white; border: 0; border-radius: 5px; }
+    .message { margin-top: 18px; padding: 12px; background: #eef4ff; border-radius: 5px; }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9;">
-
-    <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 400px;">
-        <h2 style="color: #333;">Registration Form</h2>
-
-        <% if (errors.length > 0) { %>
-            <div style="color: red; margin-bottom: 15px;">
-                <% errors.forEach(error => { %>
-                    <p style="margin: 5px 0;"><%= error %></p>
-                <% }) %>
-            </div>
-        <% } %>
-
-        <form action="/submit" method="POST" onsubmit="return validateForm()">
-            <label style="display:block; margin-bottom: 5px;">Username:</label>
-            <input type="text" id="username" name="username" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
-
-            <label style="display:block; margin-bottom: 5px;">Age:</label>
-            <input type="number" id="age" name="age" style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px;">
-
-            <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">Submit</button>
-        </form>
-    </div>
-
-    <div style="margin-top: 30px;">
-        <h3>Temporary Server Storage Data</h3>
-        <ul>
-            <% data.forEach(item => { %>
-                <li>User: <%= item.username %> | Age: <%= item.age %></li>
-            <% }) %>
-        </ul>
-    </div>
-
-    <script>
-        function validateForm() {
-            const username = document.getElementById('username').value;
-            const age = document.getElementById('age').value;
-            if (username.trim() === '' || age === '') {
-                alert('Client-side check: All fields are required!');
-                return false;
-            }
-            return true;
-        }
-    </script>
+<body>
+  <h1>Task 1: HTML Structure and Basic Server Interaction</h1>
+  <p>Enter your name and submit the form. Express handles the request and EJS renders the response.</p>
+  <form action="/submit" method="POST">
+    <label for="name">Name</label>
+    <input id="name" name="name" type="text" value="<%= submittedName %>" placeholder="Enter your name" required>
+    <button type="submit">Submit</button>
+  </form>
+  <% if (message) { %>
+    <p class="message"><%= message %></p>
+  <% } %>
 </body>
 </html>

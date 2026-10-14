@@ -1,33 +1,33 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const path = require("path");
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3001;
 
-app.use(cors());
-app.use(express.json());
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
 
-let items = [
-  { id: 1, name: 'Item One' },
-  { id: 2, name: 'Item Two' }
-];
-
-// GET - Read
-app.get('/api/items', (req, res) => {
-  res.json(items);
+app.get("/", (req, res) => {
+  res.render("index", { message: null, submittedName: "" });
 });
 
-// POST - Create
-app.post('/api/items', (req, res) => {
-  const newItem = { id: Date.now(), name: req.body.name };
-  items.push(newItem);
-  res.status(201).json(newItem);
+app.post("/submit", (req, res) => {
+  const submittedName = (req.body.name || "").trim();
+
+  if (!submittedName) {
+    return res.status(400).render("index", {
+      message: "Please enter your name.",
+      submittedName: ""
+    });
+  }
+
+  res.render("index", {
+    message: `Form submitted successfully. Hello, ${submittedName}!`,
+    submittedName
+  });
 });
 
-// DELETE - Delete
-app.delete('/api/items/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  items = items.filter(item => item.id !== id);
-  res.json({ message: 'Item deleted successfully' });
+app.listen(PORT, () => {
+  console.log(`Task 1 server running at http://localhost:${PORT}`);
 });
-
-app.listen(PORT, () => console.log(`Task 5 API running on http://localhost:${PORT}`));
