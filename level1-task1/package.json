@@ -1,0 +1,8 @@
+{
+  "name": "cognifyz-level1-task1",
+  "version": "1.0.0",
+  "description": "Cognifyz Full Stack Development Internship - Task 1",
+  "main": "server.js",
+  "scripts": {"start": "node server.js"},
+  "dependencies": {"ejs": "^3.1.10", "express": "^4.21.2"}
+}
