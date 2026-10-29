@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 4 | Forms, DOM and Client-Side Routing</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/">Task 4 <span>Club Portal</span></a>
+    <nav aria-label="Main">
+      <a href="#/" data-route="/">Home</a>
+      <a href="#/register" data-route="/register">Join</a>
+      <a href="#/members" data-route="/members">Members <span class="badge" id="navCount">0</span></a>
+      <a href="#/about" data-route="/about">About</a>
+    </nav>
+  </header>
+
+  <!-- The router swaps the contents of this element; the page never reloads -->
+  <main id="view" tabindex="-1" aria-live="polite"></main>
+
+  <div id="toast" class="toast" role="status"></div>
+  <footer class="footer">Cognifyz Full Stack Development Internship &middot; Task 4</footer>
+
+  <!-- ===== Page templates (inert until the router clones them) ===== -->
+  <template id="tpl-home">
+    <section class="panel">
+      <h1>A tiny single-page app</h1>
+      <p>Move between pages with the menu. Watch the address bar: only the part after <code>#</code> changes, and the page never reloads.</p>
+      <ul class="feature-list">
+        <li><strong>Complex validation:</strong> username rules, password strength and a matching confirm field.</li>
+        <li><strong>Dynamic DOM:</strong> members appear, filter and disappear without a refresh.</li>
+        <li><strong>Client-side routing:</strong> a small hash router with a 404 page.</li>
+      </ul>
+      <a class="btn" href="#/register">Join the club</a>
+    </section>
+  </template>
+
+  <template id="tpl-register">
+    <section class="panel narrow">
+      <h1>Join the club</h1>
+      <form id="joinForm" novalidate autocomplete="off">
+
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" maxlength="20" placeholder="3 to 20 letters, digits or _">
+          <p class="msg" data-for="username"></p>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com">
+          <p class="msg" data-for="email"></p>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="with-toggle">
+            <input id="password" name="password" type="password" autocomplete="new-password">
+            <button type="button" class="ghost" id="togglePw" aria-label="Show password">Show</button>
+          </div>
+          <div class="meter" aria-hidden="true"><div class="meter-fill" id="meterFill"></div></div>
+          <p class="strength" id="strengthLabel">Strength: none</p>
+          <ul class="rules" id="pwRules">
+            <li data-rule="length">At least 8 characters</li>
+            <li data-rule="lower">A lowercase letter</li>
+            <li data-rule="upper">An uppercase letter</li>
+            <li data-rule="digit">A number</li>
+            <li data-rule="symbol">A symbol such as ! @ # $</li>
+            <li data-rule="nospace">No spaces</li>
+          </ul>
+          <p class="msg" data-for="password"></p>
+        </div>
+
+        <div class="field">
+          <label for="confirm">Confirm password</label>
+          <input id="confirm" name="confirm" type="password" autocomplete="new-password">
+          <p class="msg" data-for="confirm"></p>
+        </div>
+
+        <div class="field">
+          <label for="interest">Main interest</label>
+          <select id="interest" name="interest">
+            <option value="">Choose one</option>
+            <option value="web">Web development</option>
+            <option value="data">Data and AI</option>
+            <option value="network">Networking</option>
+            <option value="other">Something else</option>
+          </select>
+          <p class="msg" data-for="interest"></p>
+        </div>
+
+        <!-- Appears only when "Something else" is picked: dynamic DOM -->
+        <div class="field hidden" id="otherWrap">
+          <label for="other">Tell us more</label>
+          <input id="other" name="other" type="text" maxlength="40">
+          <p class="msg" data-for="other"></p>
+        </div>
+
+        <button type="submit" class="btn" id="joinBtn">Create account</button>
+      </form>
+    </section>
+  </template>
+
+  <template id="tpl-members">
+    <section class="panel">
+      <div class="members-head">
+        <h1>Members <small id="memberTotal"></small></h1>
+        <input id="search" type="search" placeholder="Filter by name or email" aria-label="Filter members">
+      </div>
+      <ul id="memberList" class="member-list"></ul>
+      <p id="emptyState" class="empty hidden"></p>
+    </section>
+  </template>
+
+  <template id="tpl-about">
+    <section class="panel">
+      <h1>About this task</h1>
+      <p>Built with plain HTML, CSS and JavaScript. No framework, no build step. The router listens for <code>hashchange</code>, finds the matching template and puts a copy of it into the page.</p>
+      <p>Members are stored in <code>localStorage</code> so they survive a refresh.</p>
+    </section>
+  </template>
+
+  <template id="tpl-404">
+    <section class="panel">
+      <h1>Page not found</h1>
+      <p>There is no page at <code id="badPath"></code>.</p>
+      <a class="btn" href="#/">Go home</a>
+    </section>
+  </template>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
