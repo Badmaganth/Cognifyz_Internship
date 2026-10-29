@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<div style="background:#fff;border:1px solid #e3d5c3;border-radius:10px;padding:22px 26px;">
+  <h2 style="color:#2e7d32;margin-top:0;">You are registered, <%= record.fullName %>.</h2>
+  <p>The server validated your data and stored it in memory.</p>
+  <table style="border-collapse:collapse;width:100%;">
+    <% [['Email', record.email], ['Phone', record.phone], ['Age', record.age], ['Gender', record.gender],
+        ['Course', record.course], ['Skills', record.skills.join(', ')], ['Bio', record.bio || '-'], ['Saved at', record.createdAt]].forEach(row => { %>
+      <tr>
+        <td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;width:110px;"><%= row[0] %></td>
+        <td style="padding:8px;border-bottom:1px solid #eee;"><%= row[1] %></td>
+      </tr>
+    <% }) %>
+  </table>
+  <p><a href="/">Register another person</a> &middot; <a href="/registrations">See all registrations</a></p>
+</div>
+<%- include('partials/footer') %>

@@ -1,0 +1,14 @@
+{
+  "name": "task2-validation",
+  "version": "1.0.0",
+  "description": "Cognifyz Full Stack Internship - Task 2: Inline styles, basic interaction and server-side validation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test-validators.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  }
+}

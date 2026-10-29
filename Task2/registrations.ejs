@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+<div style="background:#fff;border:1px solid #e3d5c3;border-radius:10px;padding:22px 26px;">
+  <h2 style="margin-top:0;">Stored registrations (<%= registrations.length %>)</h2>
+  <% if (!registrations.length) { %>
+    <p>No one has registered yet. <a href="/">Add the first registration.</a></p>
+  <% } else { %>
+    <div style="overflow-x:auto;">
+    <table style="border-collapse:collapse;width:100%;font-size:.92rem;">
+      <tr style="background:#f4e8d8;text-align:left;">
+        <th style="padding:8px;">#</th><th style="padding:8px;">Name</th><th style="padding:8px;">Email</th>
+        <th style="padding:8px;">Course</th><th style="padding:8px;">Skills</th>
+      </tr>
+      <% registrations.forEach(r => { %>
+        <tr>
+          <td style="padding:8px;border-bottom:1px solid #eee;"><%= r.id %></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;"><%= r.fullName %></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;"><%= r.email %></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;"><%= r.course %></td>
+          <td style="padding:8px;border-bottom:1px solid #eee;"><%= r.skills.join(', ') %></td>
+        </tr>
+      <% }) %>
+    </table>
+    </div>
+  <% } %>
+</div>
+<%- include('partials/footer') %>

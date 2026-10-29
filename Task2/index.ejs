@@ -1,0 +1,195 @@
+<%- include('partials/header') %>
+
+<%
+  const v = values || {};
+  const picked = Array.isArray(v.skills) ? v.skills : (v.skills ? [v.skills] : []);
+  const inputStyle = 'width:100%;padding:10px;border:1.5px solid #cdbfae;border-radius:6px;font:inherit;box-sizing:border-box;background:#fff;';
+  const labelStyle = 'display:block;margin:16px 0 6px;font-weight:bold;';
+  const courseNames = { web:'Web development', data:'Data analytics', cloud:'Cloud computing', security:'Cyber security' };
+  const skillNames = { html:'HTML', css:'CSS', javascript:'JavaScript', node:'Node.js', database:'Databases' };
+%>
+
+<div style="background:#fff;border:1px solid #e3d5c3;border-radius:10px;padding:8px 26px 26px;">
+  <h2 style="margin-bottom:4px;">Workshop registration</h2>
+  <p style="margin-top:0;color:#6b5a48;">Fields are checked in your browser first, then checked again on the server.</p>
+
+  <% if (Object.keys(errors).length) { %>
+    <div style="background:#fdecea;border-left:5px solid #b3261e;padding:10px 14px;margin:14px 0;border-radius:4px;">
+      The server rejected the form. Please fix <%= Object.keys(errors).length %> field(s) below.
+    </div>
+  <% } %>
+
+  <!-- novalidate turns off the browser's own popups so our inline JS messages show instead -->
+  <form id="regForm" action="/register" method="POST" novalidate>
+
+    <label for="fullName" style="<%= labelStyle %>">Full name</label>
+    <input type="text" id="fullName" name="fullName" value="<%= v.fullName || '' %>" style="<%= inputStyle %>" class="<%= errors.fullName ? 'invalid' : '' %>">
+    <p class="field-error" id="err-fullName"><%= errors.fullName || '' %></p>
+
+    <label for="email" style="<%= labelStyle %>">Email</label>
+    <input type="email" id="email" name="email" value="<%= v.email || '' %>" style="<%= inputStyle %>" class="<%= errors.email ? 'invalid' : '' %>">
+    <p class="field-error" id="err-email"><%= errors.email || '' %></p>
+
+    <label for="phone" style="<%= labelStyle %>">Mobile number</label>
+    <input type="tel" id="phone" name="phone" value="<%= v.phone || '' %>" placeholder="10 digits" style="<%= inputStyle %>" class="<%= errors.phone ? 'invalid' : '' %>">
+    <p class="field-error" id="err-phone"><%= errors.phone || '' %></p>
+
+    <label for="age" style="<%= labelStyle %>">Age</label>
+    <input type="number" id="age" name="age" value="<%= v.age || '' %>" style="<%= inputStyle %>" class="<%= errors.age ? 'invalid' : '' %>">
+    <p class="field-error" id="err-age"><%= errors.age || '' %></p>
+
+    <span style="<%= labelStyle %>">Gender</span>
+    <label style="margin-right:16px;"><input type="radio" name="gender" value="female" <%= v.gender === 'female' ? 'checked' : '' %>> Female</label>
+    <label style="margin-right:16px;"><input type="radio" name="gender" value="male" <%= v.gender === 'male' ? 'checked' : '' %>> Male</label>
+    <label><input type="radio" name="gender" value="other" <%= v.gender === 'other' ? 'checked' : '' %>> Other</label>
+    <p class="field-error" id="err-gender"><%= errors.gender || '' %></p>
+
+    <label for="course" style="<%= labelStyle %>">Course</label>
+    <select id="course" name="course" style="<%= inputStyle %>" class="<%= errors.course ? 'invalid' : '' %>">
+      <option value="">-- choose --</option>
+      <% COURSES.forEach(c => { %>
+        <option value="<%= c %>" <%= v.course === c ? 'selected' : '' %>><%= courseNames[c] %></option>
+      <% }) %>
+    </select>
+    <p class="field-error" id="err-course"><%= errors.course || '' %></p>
+
+    <span style="<%= labelStyle %>">Skills you already have</span>
+    <% SKILLS.forEach(s => { %>
+      <label style="margin-right:14px;display:inline-block;">
+        <input type="checkbox" name="skills" value="<%= s %>" <%= picked.includes(s) ? 'checked' : '' %>> <%= skillNames[s] %>
+      </label>
+    <% }) %>
+    <p class="field-error" id="err-skills"><%= errors.skills || '' %></p>
+
+    <label for="bio" style="<%= labelStyle %>">Short bio <span style="font-weight:normal;color:#8a7a68;">(optional)</span></label>
+    <textarea id="bio" name="bio" rows="3" style="<%= inputStyle %>" class="<%= errors.bio ? 'invalid' : '' %>"><%= v.bio || '' %></textarea>
+    <div style="display:flex;justify-content:space-between;">
+      <p class="field-error" id="err-bio"><%= errors.bio || '' %></p>
+      <small id="bioCount" style="color:#8a7a68;">0 / 200</small>
+    </div>
+
+    <label style="display:block;margin-top:14px;">
+      <input type="checkbox" id="terms" name="terms" <%= v.terms ? 'checked' : '' %>> I accept the terms
+    </label>
+    <p class="field-error" id="err-terms"><%= errors.terms || '' %></p>
+
+    <button type="submit" id="submitBtn"
+      style="margin-top:10px;padding:12px 26px;background:#8c4a1f;color:#fff;border:0;border-radius:6px;font:inherit;cursor:pointer;"
+      onmouseover="this.style.background='#6f3a17'" onmouseout="this.style.background='#8c4a1f'">
+      Register
+    </button>
+    <button type="button" id="resetBtn"
+      style="margin-top:10px;margin-left:8px;padding:12px 20px;background:transparent;color:#8c4a1f;border:1.5px solid #8c4a1f;border-radius:6px;font:inherit;cursor:pointer;">
+      Clear form
+    </button>
+  </form>
+</div>
+
+<!-- Inline JavaScript: client-side validation + small interactions -->
+<script>
+  const form = document.getElementById('regForm');
+
+  const rules = {
+    fullName(v) {
+      v = v.trim();
+      if (!v) return 'Full name is required.';
+      if (v.length < 2 || v.length > 60) return 'Full name must be 2 to 60 characters.';
+      if (!/^[A-Za-z][A-Za-z .'-]*$/.test(v)) return 'Use letters, spaces, dots, hyphens or apostrophes only.';
+      return '';
+    },
+    email(v) {
+      v = v.trim();
+      if (!v) return 'Email is required.';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return 'Enter a valid email address.';
+      return '';
+    },
+    phone(v) {
+      v = v.replace(/[\s-]/g, '');
+      if (!v) return 'Phone number is required.';
+      if (!/^[6-9]\d{9}$/.test(v)) return 'Enter a 10-digit mobile number starting with 6, 7, 8 or 9.';
+      return '';
+    },
+    age(v) {
+      if (v.trim() === '') return 'Age is required.';
+      const n = Number(v);
+      if (!Number.isInteger(n) || n < 16 || n > 60) return 'Age must be a whole number between 16 and 60.';
+      return '';
+    },
+    course(v) { return v ? '' : 'Please choose a course.'; },
+    bio(v) { return v.length > 200 ? 'Bio can be at most 200 characters.' : ''; }
+  };
+
+  function showError(name, message) {
+    const box = document.getElementById('err-' + name);
+    const input = document.getElementById(name);
+    box.textContent = message;
+    if (input) {
+      input.classList.toggle('invalid', !!message);
+      input.classList.toggle('valid', !message && input.value.trim() !== '');
+    }
+  }
+
+  function checkField(name) {
+    const input = document.getElementById(name);
+    const message = rules[name](input.value);
+    showError(name, message);
+    return !message;
+  }
+
+  function checkGroups() {
+    let ok = true;
+    const gender = form.querySelector('input[name="gender"]:checked');
+    showError('gender', gender ? '' : 'Please select an option.');
+    if (!gender) ok = false;
+
+    const skills = form.querySelectorAll('input[name="skills"]:checked');
+    showError('skills', skills.length ? '' : 'Pick at least one skill.');
+    if (!skills.length) ok = false;
+
+    const terms = document.getElementById('terms').checked;
+    showError('terms', terms ? '' : 'You must accept the terms to continue.');
+    if (!terms) ok = false;
+    return ok;
+  }
+
+  // Validate each text field when the user leaves it (blur), and re-check while typing
+  Object.keys(rules).forEach(name => {
+    const input = document.getElementById(name);
+    input.addEventListener('blur', () => checkField(name));
+    input.addEventListener('input', () => {
+      if (input.classList.contains('invalid')) checkField(name);
+    });
+  });
+
+  // Live character counter for the bio
+  const bio = document.getElementById('bio');
+  const bioCount = document.getElementById('bioCount');
+  function updateCount() {
+    bioCount.textContent = bio.value.length + ' / 200';
+    bioCount.style.color = bio.value.length > 200 ? '#b3261e' : '#8a7a68';
+  }
+  bio.addEventListener('input', updateCount);
+  updateCount();
+
+  // Block submit if anything is wrong, and jump to the first problem
+  form.addEventListener('submit', event => {
+    let ok = true;
+    Object.keys(rules).forEach(name => { if (!checkField(name)) ok = false; });
+    if (!checkGroups()) ok = false;
+
+    if (!ok) {
+      event.preventDefault();
+      const firstBad = form.querySelector('.invalid');
+      if (firstBad) firstBad.focus();
+    }
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    form.reset();
+    form.querySelectorAll('.field-error').forEach(p => p.textContent = '');
+    form.querySelectorAll('.invalid, .valid').forEach(i => i.classList.remove('invalid', 'valid'));
+    updateCount();
+  });
+</script>
+
+<%- include('partials/footer') %>
