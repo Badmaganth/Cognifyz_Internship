@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+
+<section class="card">
+  <h2>Quick greeting <small>(GET form)</small></h2>
+  <p>This form sends its data in the URL, so the server reads <code>req.query</code>.</p>
+  <form action="/greet" method="GET">
+    <label for="g-name">Your name</label>
+    <input type="text" id="g-name" name="name" placeholder="e.g. Asha" required>
+
+    <label for="g-mood">Mood today</label>
+    <select id="g-mood" name="mood">
+      <option value="happy">Happy</option>
+      <option value="curious" selected>Curious</option>
+      <option value="sleepy">Sleepy</option>
+    </select>
+
+    <button type="submit">Greet me</button>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Contact form <small>(POST form)</small></h2>
+  <p>This form sends its data in the request body, so the server reads <code>req.body</code>.
+     So far the server holds <strong><%= count %></strong> message(s).</p>
+  <form action="/contact" method="POST">
+    <label for="c-name">Name</label>
+    <input type="text" id="c-name" name="name" required>
+
+    <label for="c-email">Email</label>
+    <input type="email" id="c-email" name="email" required>
+
+    <label for="c-topic">Topic</label>
+    <select id="c-topic" name="topic">
+      <option value="general">General question</option>
+      <option value="feedback">Feedback</option>
+      <option value="support">Support</option>
+    </select>
+
+    <label for="c-message">Message</label>
+    <textarea id="c-message" name="message" rows="4" required></textarea>
+
+    <button type="submit">Send message</button>
+  </form>
+</section>
+
+<%- include('partials/footer') %>

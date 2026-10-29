@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+<section class="card">
+  <h2>All messages (<%= messages.length %>)</h2>
+  <% if (messages.length === 0) { %>
+    <p>Nothing here yet. <a href="/">Send the first message.</a></p>
+  <% } else { %>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Name</th><th>Email</th><th>Topic</th><th>Message</th><th>Received</th></tr>
+      </thead>
+      <tbody>
+        <% messages.forEach(m => { %>
+          <tr>
+            <td><%= m.id %></td>
+            <td><%= m.name %></td>
+            <td><%= m.email %></td>
+            <td><%= m.topic %></td>
+            <td><%= m.message %></td>
+            <td><%= m.receivedAt %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</section>
+
+<%- include('partials/footer') %>

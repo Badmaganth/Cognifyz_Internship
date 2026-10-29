@@ -1,0 +1,19 @@
+<%- include('partials/header') %>
+
+<section class="card">
+<% if (entry) { %>
+  <h2>Thanks, <%= entry.name %>!</h2>
+  <p>Your message was received on <%= entry.receivedAt %>.</p>
+  <dl>
+    <dt>Email</dt><dd><%= entry.email %></dd>
+    <dt>Topic</dt><dd><%= entry.topic %></dd>
+    <dt>Message</dt><dd><%= entry.message %></dd>
+  </dl>
+<% } else { %>
+  <h2>Page not found</h2>
+  <p>That address does not exist on this server.</p>
+<% } %>
+  <a class="btn" href="/">Back to home</a>
+</section>
+
+<%- include('partials/footer') %>
