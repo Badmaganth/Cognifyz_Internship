@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 5 | REST API Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Task manager</h1>
+    <p>This page talks to its own REST API at <code>/api/tasks</code>.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2 id="formTitle">Add a task</h2>
+      <form id="taskForm" novalidate>
+        <input type="hidden" id="taskId">
+        <div class="row">
+          <div class="grow">
+            <label for="title">Title</label>
+            <input id="title" type="text" maxlength="80" placeholder="What needs doing?">
+          </div>
+          <div>
+            <label for="priority">Priority</label>
+            <select id="priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+        <label for="description">Details <span class="opt">(optional)</span></label>
+        <textarea id="description" rows="2" maxlength="200"></textarea>
+        <p id="formError" class="error" role="alert"></p>
+        <button type="submit" id="saveBtn">Add task</button>
+        <button type="button" id="cancelBtn" class="secondary hidden">Cancel edit</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="toolbar">
+        <h2>Your tasks <span id="count" class="count"></span></h2>
+        <div class="filters">
+          <input id="search" type="search" placeholder="Search" aria-label="Search tasks">
+          <select id="statusFilter" aria-label="Filter by status">
+            <option value="">All</option>
+            <option value="open">Open</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+      </div>
+      <p id="status" class="status" role="status"></p>
+      <ul id="taskList" class="task-list"></ul>
+    </section>
+
+    <details class="card api-help">
+      <summary>API reference</summary>
+      <table>
+        <tr><th>Method</th><th>Path</th><th>What it does</th></tr>
+        <tr><td>GET</td><td>/api/tasks</td><td>List tasks (filters: status, priority, q)</td></tr>
+        <tr><td>GET</td><td>/api/tasks/:id</td><td>Get one task</td></tr>
+        <tr><td>POST</td><td>/api/tasks</td><td>Create a task</td></tr>
+        <tr><td>PUT</td><td>/api/tasks/:id</td><td>Replace title, description and priority</td></tr>
+        <tr><td>PATCH</td><td>/api/tasks/:id</td><td>Change only the fields you send</td></tr>
+        <tr><td>DELETE</td><td>/api/tasks/:id</td><td>Delete a task</td></tr>
+      </table>
+    </details>
+  </main>
+
+  <footer>Cognifyz Full Stack Development Internship &middot; Task 5</footer>
+  <script src="app.js"></script>
+</body>
+</html>

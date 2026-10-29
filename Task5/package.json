@@ -1,0 +1,12 @@
+{
+  "name": "task5-rest-api",
+  "version": "1.0.0",
+  "description": "Cognifyz Full Stack Internship - Task 5: RESTful API with CRUD endpoints and a front end that consumes it",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
