@@ -1,0 +1,164 @@
+/* ============================================================
+   Task 3 - Advanced CSS styling and responsive design
+   Layout: Bootstrap grid. Look and motion: custom CSS below.
+   ============================================================ */
+
+:root {
+  --ink: #0f1d3a;        /* deep navy */
+  --ink-2: #1c2f5e;
+  --paper: #f6f8fc;
+  --tint: #e9eef8;
+  --accent: #ffb703;     /* amber */
+  --accent-dark: #e09f00;
+  --mint: #2ec4b6;
+  --text: #1b2437;
+  --muted: #5b6579;
+  --radius: 14px;
+  --font-head: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--text); background: var(--paper); }
+h1, h2, h3, .navbar-brand { font-family: var(--font-head); }
+section[id], header[id] { scroll-margin-top: 70px; }
+
+/* ---------- Navbar ---------- */
+.site-nav { background: rgba(15, 29, 58, 0.92); backdrop-filter: blur(8px); transition: padding .3s ease, box-shadow .3s ease; }
+.site-nav.scrolled { box-shadow: 0 6px 24px rgba(0, 0, 0, .25); }
+.site-nav .navbar-brand { color: #fff; font-weight: 800; letter-spacing: .2px; }
+.site-nav .dot { color: var(--accent); }
+.site-nav .nav-link { color: #cfd8ee; position: relative; transition: color .25s ease; }
+.site-nav .nav-link::after {                      /* underline grows from the left on hover */
+  content: ""; position: absolute; left: .5rem; right: .5rem; bottom: .25rem; height: 2px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .3s ease;
+}
+.site-nav .nav-link:hover, .site-nav .nav-link.active { color: #fff; }
+.site-nav .nav-link:hover::after, .site-nav .nav-link.active::after { transform: scaleX(1); }
+.navbar-toggler { border-color: rgba(255, 255, 255, .4); }
+.navbar-toggler-icon { filter: invert(1); }
+
+/* ---------- Hero ---------- */
+.hero {
+  background: radial-gradient(circle at 80% 20%, var(--ink-2), var(--ink) 60%);
+  color: #fff; padding: 9rem 0 6rem; overflow: hidden;
+}
+.hero-kicker { color: var(--accent); font-weight: 700; margin-bottom: 1rem; }
+.hero-title { font-size: clamp(2.2rem, 5.5vw, 4rem); font-weight: 800; line-height: 1.05; margin-bottom: 1.25rem; }
+.hero-sub { color: #cbd5ee; font-size: 1.15rem; max-width: 34rem; margin-bottom: 2rem; }
+
+/* Buttons */
+.btn-accent {
+  background: var(--accent); border: 2px solid var(--accent); color: #1a1400; font-weight: 700;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.btn-accent:hover { background: var(--accent-dark); border-color: var(--accent-dark); color: #1a1400; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255, 183, 3, .3); }
+.btn-accent:active { transform: translateY(0); }
+.btn-outline-light { transition: transform .2s ease, background .2s ease, color .2s ease; }
+.btn-outline-light:hover { transform: translateY(-2px); color: var(--ink); }
+
+/* Orbiting tech chips (the one big animation on the page) */
+.stack-orbit { position: relative; width: min(340px, 80vw); aspect-ratio: 1; margin: 0 auto; }
+.orbit-core {
+  position: absolute; inset: 32%; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent); color: #1a1400; font: 800 1.6rem var(--font-head);
+  box-shadow: 0 0 0 10px rgba(255, 183, 3, .18), 0 0 60px rgba(255, 183, 3, .35);
+  animation: pulse 3.2s ease-in-out infinite;
+}
+.chip {
+  position: absolute; top: 50%; left: 50%; padding: .35rem .8rem; border-radius: 999px;
+  background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .25);
+  font-size: .85rem; font-weight: 500; white-space: nowrap;
+  animation: orbit 16s linear infinite;
+  animation-delay: calc(var(--i) * -3.2s);
+}
+.c1 { --i: 0; } .c2 { --i: 1; } .c3 { --i: 2; } .c4 { --i: 3; } .c5 { --i: 4; }
+@keyframes orbit {
+  from { transform: translate(-50%, -50%) rotate(0deg)   translateX(clamp(105px, 24vw, 135px)) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg) translateX(clamp(105px, 24vw, 135px)) rotate(-360deg); }
+}
+@keyframes pulse { 50% { transform: scale(1.06); } }
+
+/* ---------- Generic sections ---------- */
+.section { padding: 5.5rem 0; }
+.section-tint { background: var(--tint); }
+.section-title { font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 800; margin-bottom: 1.5rem; color: var(--ink); }
+.stat { background: #fff; border-radius: var(--radius); padding: 1rem .5rem; box-shadow: 0 2px 10px rgba(15, 29, 58, .07); }
+.stat strong { display: block; font: 800 2rem var(--font-head); color: var(--ink); }
+.stat span { font-size: .8rem; color: var(--muted); }
+
+/* ---------- Skills ---------- */
+.skill { margin-bottom: 1.5rem; }
+.skill-head { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: .4rem; }
+.bar { height: 10px; background: #fff; border-radius: 99px; overflow: hidden; }
+.bar-fill { height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--mint), var(--accent)); transition: width 1.2s cubic-bezier(.2, .8, .2, 1); }
+
+/* ---------- Project cards ---------- */
+.project-card {
+  height: 100%; background: #fff; border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 2px 12px rgba(15, 29, 58, .08);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.project-card:hover { transform: translateY(-8px); box-shadow: 0 18px 36px rgba(15, 29, 58, .16); }
+.project-thumb { height: 150px; display: grid; place-items: center; color: #fff; font: 800 1.8rem var(--font-head); transition: letter-spacing .3s ease; }
+.project-card:hover .project-thumb { letter-spacing: 3px; }
+.t1 { background: linear-gradient(135deg, #1c2f5e, #3a5bb0); }
+.t2 { background: linear-gradient(135deg, #0f766e, #2ec4b6); }
+.t3 { background: linear-gradient(135deg, #b45309, #ffb703); color: #1a1400; }
+.project-body { padding: 1.25rem 1.4rem 1.5rem; }
+.project-body h3 { font-size: 1.2rem; font-weight: 700; }
+.project-body p { color: var(--muted); }
+.project-link { font-weight: 700; color: var(--ink-2); text-decoration: none; border-bottom: 2px solid var(--accent); transition: color .2s ease; }
+.project-link:hover { color: #000; }
+
+/* ---------- Timeline ---------- */
+.timeline { list-style: none; margin: 0; padding: 0 0 0 1.75rem; border-left: 3px solid var(--ink-2); max-width: 44rem; }
+.timeline li { position: relative; padding-bottom: 2rem; }
+.timeline li::before {
+  content: ""; position: absolute; left: calc(-1.75rem - 9px); top: .35rem; width: 15px; height: 15px;
+  border-radius: 50%; background: var(--accent); border: 3px solid var(--ink-2);
+}
+.timeline h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .25rem; }
+.timeline p { color: var(--muted); margin: 0; }
+
+/* ---------- Contact ---------- */
+.contact-form { background: #fff; padding: 1.75rem; border-radius: var(--radius); box-shadow: 0 2px 14px rgba(15, 29, 58, .08); }
+.contact-form .form-control { border-radius: 10px; padding: .7rem .9rem; transition: box-shadow .2s ease, border-color .2s ease; }
+.contact-form .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 .25rem rgba(255, 183, 3, .3); }
+#formNote.ok { color: #0f766e; font-weight: 700; }
+#formNote.bad { color: #b3261e; font-weight: 700; }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--ink); color: #b8c3de; padding: 1.5rem 0; font-size: .9rem; }
+.site-footer a { color: var(--accent); }
+
+/* ---------- Scroll reveal (used once, on the skill bars) ---------- */
+.bar-fill.go { width: var(--w); }
+
+/* ============================================================
+   Responsive breakpoints (mobile-first additions)
+   ============================================================ */
+@media (max-width: 991.98px) {                /* tablets and below */
+  .hero { padding: 7.5rem 0 4rem; text-align: center; }
+  .hero-sub { margin-inline: auto; }
+  .hero .d-flex { justify-content: center; }
+  .section { padding: 4rem 0; }
+  .site-nav .navbar-collapse { padding: .75rem 0; }
+}
+@media (max-width: 575.98px) {                /* phones */
+  .hero-title { font-size: 2.1rem; }
+  .btn-lg { width: 100%; }
+  .contact-form { padding: 1.1rem; }
+  .timeline { padding-left: 1.25rem; }
+  .timeline li::before { left: calc(-1.25rem - 9px); }
+  #formNote { display: block; margin: .75rem 0 0; }
+}
+@media (min-width: 1400px) {                  /* large monitors */
+  .hero-title { font-size: 4.4rem; }
+}
+
+/* Respect users who ask for less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .bar-fill { width: var(--w); }
+}

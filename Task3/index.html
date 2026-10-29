@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task 3 | Responsive Portfolio</title>
+
+  <!-- Bootstrap 5 (CSS framework) from CDN: grid, navbar, cards, forms -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Our own CSS loads after Bootstrap so it can override it -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ===== Navbar (collapses into a menu button on small screens) ===== -->
+  <nav class="navbar navbar-expand-lg fixed-top site-nav">
+    <div class="container">
+      <a class="navbar-brand" href="#top">Badmaganth<span class="dot">.</span>dev</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+              aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#journey">Journey</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Section 1: Hero ===== -->
+  <header id="top" class="hero">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <p class="hero-kicker">Final-year CSE student, Chennai</p>
+          <h1 class="hero-title">I build things for the web, front to back.</h1>
+          <p class="hero-sub">
+            React on the screen, Node and MongoDB behind it. I like small, clear interfaces
+            that load fast and survive real users.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#projects" class="btn btn-accent btn-lg">See my work</a>
+            <a href="#contact" class="btn btn-outline-light btn-lg">Get in touch</a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <!-- Animated stack of tags: pure CSS keyframes -->
+          <div class="stack-orbit" aria-hidden="true">
+            <span class="chip c1">React</span>
+            <span class="chip c2">Node.js</span>
+            <span class="chip c3">Express</span>
+            <span class="chip c4">MongoDB</span>
+            <span class="chip c5">Redux</span>
+            <div class="orbit-core">MERN</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Section 2: About ===== -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="row g-5 align-items-start">
+        <div class="col-md-5">
+          <h2 class="section-title">About me</h2>
+        </div>
+        <div class="col-md-7">
+          <p class="lead">
+            I am a computer science student who learns by shipping. My internship at a data
+            company put me on a full stack track, where each task added one more layer:
+            forms, validation, styling, routing and APIs.
+          </p>
+          <p>
+            I enjoy the moment a page works on a phone, a tablet and a wide monitor without
+            three separate designs. That is what this page demonstrates.
+          </p>
+          <div class="row text-center g-3 mt-2">
+            <div class="col-4"><div class="stat"><strong>5</strong><span>tasks built</span></div></div>
+            <div class="col-4"><div class="stat"><strong>4</strong><span>breakpoints</span></div></div>
+            <div class="col-4"><div class="stat"><strong>0</strong><span>horizontal scrolls</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section 3: Skills (animated bars) ===== -->
+  <section id="skills" class="section section-tint">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="skill"><div class="skill-head"><span>React &amp; Redux</span><span>85%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="85"></div></div></div>
+          <div class="skill"><div class="skill-head"><span>Node &amp; Express</span><span>80%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="80"></div></div></div>
+          <div class="skill"><div class="skill-head"><span>MongoDB</span><span>75%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="75"></div></div></div>
+        </div>
+        <div class="col-md-6">
+          <div class="skill"><div class="skill-head"><span>HTML &amp; CSS</span><span>90%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="90"></div></div></div>
+          <div class="skill"><div class="skill-head"><span>Java &amp; C</span><span>70%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="70"></div></div></div>
+          <div class="skill"><div class="skill-head"><span>Data structures</span><span>75%</span></div>
+            <div class="bar"><div class="bar-fill" data-level="75"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section 4: Projects (card grid: 1 / 2 / 3 columns) ===== -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        <div class="col">
+          <article class="project-card">
+            <div class="project-thumb t1">Forms</div>
+            <div class="project-body">
+              <h3>Server-rendered forms</h3>
+              <p>Express and EJS pages that take form input and render the result on the server.</p>
+              <a href="#" class="project-link">View project</a>
+            </div>
+          </article>
+        </div>
+        <div class="col">
+          <article class="project-card">
+            <div class="project-thumb t2">Validate</div>
+            <div class="project-body">
+              <h3>Two-layer validation</h3>
+              <p>Browser checks for instant feedback, server checks for trust, and a temporary store.</p>
+              <a href="#" class="project-link">View project</a>
+            </div>
+          </article>
+        </div>
+        <div class="col">
+          <article class="project-card">
+            <div class="project-thumb t3">Routing</div>
+            <div class="project-body">
+              <h3>Single-page app</h3>
+              <p>Hash-based routing, a password strength meter and live DOM updates.</p>
+              <a href="#" class="project-link">View project</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section 5: Journey (timeline) ===== -->
+  <section id="journey" class="section section-tint">
+    <div class="container">
+      <h2 class="section-title">Journey</h2>
+      <ol class="timeline">
+        <li>
+          <h3>Full Stack Development internship</h3>
+          <p>Built forms, validation, responsive layouts, routing and a REST API across a multi-level task list.</p>
+        </li>
+        <li>
+          <h3>CCNA certification</h3>
+          <p>Learned how data actually moves across a network, which helps when debugging requests.</p>
+        </li>
+        <li>
+          <h3>B.E. Computer Science and Engineering</h3>
+          <p>Final year. Working on data structures, Java and a growing set of MERN projects.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Section 6: Contact ===== -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-5">
+          <h2 class="section-title">Contact</h2>
+          <p>Have a role, a project or a question? Send a note and I will reply.</p>
+        </div>
+        <div class="col-lg-7">
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" required>
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" required>
+              </div>
+              <div class="col-12">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" rows="4" required></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-accent btn-lg">Send message</button>
+                <span id="formNote" class="ms-3" role="status"></span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <span>Cognifyz Full Stack Development Internship &middot; Task 3</span>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
